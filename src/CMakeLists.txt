@@ -8,7 +8,7 @@ set(PROJECT_SOURCES
     "./config.h"
     "./core.h"
     "./CSocket.h"
-    "./CSocket.c"
+    "./CSocket.cpp"
 )
 
 add_library(CSocketLib STATIC ${PROJECT_SOURCES})

@@ -13,14 +13,25 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
+set(PROJECT_SOURCES
+    "../src/darwin_config.h"
+    "../src/linux_config.h"
+    "../src/win_config.h"
+    "../src/config.h"
+    "../src/core.h"
+    "../src/CSocket.h"
+    "../src/CSocket.cpp"
+)
+
 add_executable(
-  test
+  Test
+  ${PROJECT_SOURCES}
   test.cpp
 )
 target_link_libraries(
-  test
+  Test
   GTest::gtest_main
 )
 
 include(GoogleTest)
-gtest_discover_tests(test)
+gtest_discover_tests(Test)

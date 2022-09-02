@@ -41,37 +41,7 @@ int c_blocking(c_socket_t s);
 
 #endif
 
-typedef int (*c_socket_fn_type)(int domain, int type, int protocol);
-c_socket_fn_type c_socket = &socket;
 
-typedef status_t (*c_connect_fn_type)(c_socket_t socket, const struct sockaddr* addr, socklen_t addrlen);
-c_connect_fn_type c_connect = &connect;
-
-#define c_bind bind
-
-#define c_listen listen
-
-#define c_accept accept
-
-#if defined(DARWIN)
-#define c_close_socket close
-#elif defined(WINDOWS)
-#define c_close_socket closesocket
-#elif defined(LINUX)
-#define c_close_socket close
-#endif
-
-#define c_shutdown_socket shutdown
-
-#define c_recv recv
-
-#define c_send send
-
-typedef int (*c_getaddrinfo_fn_type)(const char* node, const char* service, const struct addrinfo* hints, struct addrinfo** res);
-c_getaddrinfo_fn_type c_getaddrinfo = &getaddrinfo;
-
-typedef int (*c_freeaddrinfo_fn_type)(struct addrinfo* ai);
-c_freeaddrinfo_fn_type c_freeaddrinfo = &freeaddrinfo;
 
 /*
 @FunctionName: cross_open_socket

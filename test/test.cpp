@@ -1,6 +1,9 @@
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
-TEST(Test, BasicAssertions) {
-    EXPECT_STRNE("hello", "world");
-    EXPECT_EQ(7 * 6, 42);
+#include "../src/CSocket.h"
+
+TEST(SocketTest, BasicAssertions) {
+    char errorMsg[512] = {0};
+    c_socket_t socket = cross_open_socket(AF_INET, SOCK_STREAM, 0, errorMsg);
+    EXPECT_NE(socket, INVALID_SOCKET);
 }
