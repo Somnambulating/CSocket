@@ -1,13 +1,13 @@
 #ifndef CORE_H_
 #define CORE_H_
 
-#define  OK          0
-#define  ERROR      -1
-#define  AGAIN      -2
-#define  BUSY       -3
-#define  DONE       -4
-#define  DECLINED   -5
-#define  ABORT      -6
+#define  C_OK          0
+#define  C_ERROR      -1
+#define  C_AGAIN      -2
+#define  C_BUSY       -3
+#define  C_DONE       -4
+#define  C_DECLINED   -5
+#define  C_ABORT      -6
 
 #define LF     (u_char) '\n'
 #define CR     (u_char) '\r'

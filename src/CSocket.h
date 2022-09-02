@@ -4,19 +4,23 @@
 #include "config.h"
 
 #if defined(DARWIN)
-typedef c_socket_t int;
+typedef int c_socket_t;
 
 #elif defined(WINDOWS)
-typedef c_socket_t SOCKET;
+typedef SOCKET c_socket_t;
 
 #elif defined(LINUX)
-typedef c_socket_t int;
+typedef int c_socket_t;
 
 #endif
 
 #ifndef STATUS_T
 #define STATUS_T
-typedef status_t int;
+typedef int status_t;
+#endif
+
+#ifndef INVALID_SOCKET
+#define INVALID_SOCKET -1
 #endif
 
 #if (HAVE_FIONBIO)
@@ -37,9 +41,11 @@ int c_blocking(c_socket_t s);
 
 #endif
 
-#define c_socket socket
+typedef int (*c_socket_fn_type)(int domain, int type, int protocol);
+c_socket_fn_type c_socket = &socket;
 
-#define c_connect connect
+typedef status_t (*c_connect_fn_type)(c_socket_t socket, const struct sockaddr* addr, socklen_t addrlen);
+c_connect_fn_type c_connect = &connect;
 
 #define c_bind bind
 
@@ -51,7 +57,7 @@ int c_blocking(c_socket_t s);
 #define c_close_socket close
 #elif defined(WINDOWS)
 #define c_close_socket closesocket
-#elif defined(UNIX)
+#elif defined(LINUX)
 #define c_close_socket close
 #endif
 
@@ -61,9 +67,11 @@ int c_blocking(c_socket_t s);
 
 #define c_send send
 
-#define c_getaddrinfo getaddrinfo
+typedef int (*c_getaddrinfo_fn_type)(const char* node, const char* service, const struct addrinfo* hints, struct addrinfo** res);
+c_getaddrinfo_fn_type c_getaddrinfo = &getaddrinfo;
 
-#define c_freeaddrinfo freeaddrinfo
+typedef int (*c_freeaddrinfo_fn_type)(struct addrinfo* ai);
+c_freeaddrinfo_fn_type c_freeaddrinfo = &freeaddrinfo;
 
 /*
 @FunctionName: cross_open_socket
@@ -208,6 +216,6 @@ status_t cross_getaddrinfo(const char* node, const char* service, const struct a
 @ai:
 @return:  This function does not return a value.
 */
-void cross_freeaddrinfo(struct addrinfo *ai, char* errorMsg);
+void cross_freeaddrinfo(struct addrinfo* ai, char* errorMsg);
 
 #endif /* CSOCKET_H_ */

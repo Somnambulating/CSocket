@@ -5,6 +5,8 @@
 #define _CRT_SECURE_NO_WARNINGS
 #define _CRT_SECURE_NO_DEPRECATE
 
+#define WIN32_LEAN_AND_MEAN
+
 /* enable gethostbyname() in msvc2015 */
 #if !(HAVE_INET6)
 #define _WINSOCK_DEPRECATED_NO_WARNINGS

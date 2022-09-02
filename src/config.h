@@ -7,7 +7,7 @@
 #elif defined(WINDOWS)
 #include "win_config.h"
 
-#elif defined(UNIX)
+#elif defined(LINUX)
 #include "linux_config.h"
 
 #endif
