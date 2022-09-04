@@ -8,7 +8,8 @@ c_socket_fn_type c_socket = &socket;
 typedef status_t (*c_connect_fn_type)(c_socket_t socket, const struct sockaddr* addr, socklen_t addrlen);
 c_connect_fn_type c_connect = &connect;
 
-#define c_bind bind
+typedef status_t (*c_bind_fn_type)(c_socket_t socket, const struct sockaddr* addr, socklen_t addrlen);
+c_bind_fn_type c_bind = &bind;
 
 #define c_listen listen
 
@@ -66,8 +67,18 @@ status_t cross_connect_socket(c_socket_t socket, const struct sockaddr* addr, so
     status_t status = C_ERROR;
     status = c_connect(socket, addr, addrlen);
     if (status == C_ERROR) {
-        perror("Invalid socket.\n");
+        perror("Connect failed.\n");
     }
 
     return status;
+}
+
+status_t cross_bind_socket(c_socket_t socket, const struct sockaddr* addr, socklen_t addrlen, char* errorMsg) {
+    status_t status = C_ERROR;
+    status = c_bind(socket, addr, addrlen);
+    if (status == C_ERROR) {
+        perror("Bind failed .\n");
+    }
+
+    return status; 
 }

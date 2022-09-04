@@ -16,4 +16,7 @@ TEST(SocketTest, BasicAssertions) {
     serv_addr.sin_port = htons(10000);
     status_t status = cross_connect_socket(socket, (struct sockaddr*)&serv_addr, sockLen, errorMsg);
     EXPECT_NE(status, C_ERROR);
+
+    status = cross_bind_socket(socket, (struct sockaddr*)&serv_addr, sockLen, errorMsg);
+    EXPECT_NE(status, C_ERROR); 
 }
