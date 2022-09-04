@@ -11,6 +11,8 @@ c_connect_fn_type c_connect = &connect;
 typedef status_t (*c_bind_fn_type)(c_socket_t socket, const struct sockaddr* addr, socklen_t addrlen);
 c_bind_fn_type c_bind = &bind;
 
+typedef status_t (*c_listen_fn_type)(c_socket_t socket, int backLog);
+c_listen_fn_type c_listen = &listen;
 #define c_listen listen
 
 #define c_accept accept
@@ -56,7 +58,13 @@ c_socket_t cross_open_socket(int domain, int type, int protocol, char* errorMsg)
     c_socket_t socket = INVALID_SOCKET;
     socket = c_socket(domain, type, protocol);
     if (socket == INVALID_SOCKET) {
-        perror("Invalid socket.\n");
+#if defined(DARWIN)
+// TODO
+#elif defined(WINDOWS)
+// TODO
+#elif defined(LINUX)
+        errorMsg = strerror(errno);
+#endif
     }
 
     return socket;
@@ -67,17 +75,41 @@ status_t cross_connect_socket(c_socket_t socket, const struct sockaddr* addr, so
     status_t status = C_ERROR;
     status = c_connect(socket, addr, addrlen);
     if (status == C_ERROR) {
-        perror("Connect failed.\n");
+#if defined(DARWIN)
+// TODO
+#elif defined(WINDOWS)
+// TODO
+#elif defined(LINUX)
+        errorMsg = strerror(errno);
+#endif
     }
 
     return status;
 }
 
+// TODO
 status_t cross_bind_socket(c_socket_t socket, const struct sockaddr* addr, socklen_t addrlen, char* errorMsg) {
     status_t status = C_ERROR;
     status = c_bind(socket, addr, addrlen);
     if (status == C_ERROR) {
-        perror("Bind failed .\n");
+#if defined(DARWIN)
+// TODO
+#elif defined(WINDOWS)
+// TODO
+#elif defined(LINUX)
+        errorMsg = strerror(errno);
+#endif
+    }
+
+    return status; 
+}
+
+// TODO
+status_t cross_listen_socket(c_socket_t socket, int backlog, char* errorMsg) {
+    status_t status = C_ERROR;
+    status = c_listen(socket, backlog);
+    if (status == C_ERROR) {
+        perror("Listen failed .\n");
     }
 
     return status; 
