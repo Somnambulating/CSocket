@@ -1,27 +1,7 @@
 #ifndef CSOCKET_H_
 #define CSOCKET_H_
 
-#include "config.h"
-
-#if defined(DARWIN)
-typedef int c_socket_t;
-
-#elif defined(WINDOWS)
-typedef SOCKET c_socket_t;
-
-#elif defined(LINUX)
-typedef int c_socket_t;
-
-#endif
-
-#ifndef STATUS_T
-#define STATUS_T
-typedef int status_t;
-#endif
-
-#ifndef INVALID_SOCKET
-#define INVALID_SOCKET -1
-#endif
+#include "core.h"
 
 #if (HAVE_FIONBIO)
 

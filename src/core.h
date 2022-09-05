@@ -15,4 +15,19 @@
 
 #define ERROR_MESSAGE_MAX_LEN 128
 
+#ifndef STATUS_T
+#define STATUS_T
+typedef int status_t;
+#endif
+
+#ifndef INVALID_SOCKET
+#define INVALID_SOCKET -1
+#endif
+
+#if defined(UNIX)
+#include "core_unix.h"
+#elif defined(WIN32)
+#include "core_win32.h"
+#endif
+
 #endif /* CORE_H_ */

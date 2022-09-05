@@ -1,5 +1,5 @@
-#ifndef WINDOWS_CONFIG_H_
-#define WINDOWS_CONFIG_H_
+#ifndef CORE_WIN32_H_
+#define CORE_WIN32_H_
 
 /* enable getenv() and gmtime() in msvc8 */
 #define _CRT_SECURE_NO_WARNINGS
@@ -257,5 +257,6 @@ typedef int                 sig_atomic_t;
 
 #define HAVE_GETADDRINFO         1
 
+typedef SOCKET c_socket_t;
 
-#endif /* WINDOWS_CONFIG_H_ */
+#endif /* CORE_WIN32_H_ */

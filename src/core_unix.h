@@ -1,5 +1,5 @@
-#ifndef DARWIN_CONFIG_H_
-#define DARWIN_CONFIG_H_
+#ifndef CORE_UNIX_H_
+#define CORE_UNIX_H_
 
 #define __APPLE_USE_RFC_3542 /* IPV6_PKTINFO */
 
@@ -22,21 +22,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/filio.h> /* FIONBIO */
+// #include <sys/filio.h> /* FIONBIO */
 #include <sys/ioctl.h>
 #include <sys/mman.h>
 #include <sys/mount.h> /* statfs() */
 #include <sys/resource.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
-#include <sys/sysctl.h>
+// #include <sys/sysctl.h>
 #include <sys/time.h>
 #include <sys/types.h>
 #include <sys/uio.h>
 #include <sys/un.h>
 #include <sys/wait.h>
 #include <unistd.h>
-#include <xlocale.h>
+// #include <xlocale.h>
 
 #ifndef IOV_MAX
 #define IOV_MAX 64
@@ -59,6 +59,8 @@
 #define HAVE_OS_SPECIFIC_INIT 1
 #define HAVE_DEBUG_MALLOC 1
 
+typedef int c_socket_t;
+
 extern char **environ;
 
-#endif /* DARWIN_CONFIG_H_ */
+#endif /* CORE_UNIX_H_ */

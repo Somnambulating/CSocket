@@ -1,9 +1,11 @@
 cmake_minimum_required(VERSION 3.14)
 project(CSocket VERSION 0.1.0)
 
+set(CMAKE_CXX_STANDARD 11)
+
 if(APPLE)
     add_compile_options(
-        -DDARWIN
+        -DUNIX
         -DHAVE_SELECT
         -DHAVE_INET6
         -DHAVE_FIONBIO
@@ -11,20 +13,13 @@ if(APPLE)
     )
 elseif(WIN32)
     add_compile_options(
-        -DWINDOWS
+        -DWIN32
         -DHAVE_SELECT
         -DHAVE_INET6
     )
 elseif(UNIX)
     add_compile_options(
-        -DLINUX
-        -DHAVE_SELECT
-        -DHAVE_INET6
-        -DHAVE_UNIX_DOMAIN
-    )
-elseif(ANDROID)
-    add_compile_options(
-        -DLINUX
+        -DUNIX
         -DHAVE_SELECT
         -DHAVE_INET6
         -DHAVE_UNIX_DOMAIN

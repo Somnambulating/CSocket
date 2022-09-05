@@ -14,10 +14,6 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 set(PROJECT_SOURCES
-    "../src/darwin_config.h"
-    "../src/linux_config.h"
-    "../src/win_config.h"
-    "../src/config.h"
     "../src/core.h"
     "../src/CSocket.h"
     "../src/CSocket.cpp"

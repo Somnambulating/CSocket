@@ -17,15 +17,12 @@ c_listen_fn_type c_listen = &listen;
 typedef status_t (*c_accept_fn_type)(c_socket_t socket, struct sockaddr* addr, socklen_t* addrlen);
 c_accept_fn_type c_accept = &accept;
 
-#if defined(DARWIN)
+#if defined(UNIX)
 typedef status_t (*c_close_socket_fn_type)(c_socket_t socket);
 c_close_socket_fn_type c_close_socket = &close;
-#elif defined(WINDOWS)
+#elif defined(WIN32)
 typedef status_t (*c_close_socket_fn_type)(c_socket_t socket);
 c_close_socket_fn_type c_close_socket = &closesocket;
-#elif defined(LINUX)
-typedef status_t (*c_close_socket_fn_type)(c_socket_t socket);
-c_close_socket_fn_type c_close_socket = &close;
 #endif
 
 typedef status_t (*c_shutdown_socket_fn_type)(c_socket_t socket, int how);
@@ -53,31 +50,23 @@ c_getaddrinfo_fn_type c_getaddrinfo = &getaddrinfo;
 typedef void (*c_freeaddrinfo_fn_type)(struct addrinfo* ai);
 c_freeaddrinfo_fn_type c_freeaddrinfo = &freeaddrinfo;
 
-#if defined(DARWIN)
+#if defined(UNIX)
 typedef int (*c_setsockopt_fn_type)(c_socket_t socket, int level, int option_name, const void* option_value, socklen_t option_len);
 c_setsockopt_fn_type c_setsockopt = &setsockopt;
 typedef int (*c_getsockopt_fn_type)(c_socket_t socket, int level, int option_name, void* option_value, socklen_t* option_len);
 c_getsockopt_fn_type c_getsockopt = &getsockopt;
-#elif defined(WINDOWS)
+#elif defined(WIN32)
 typedef int (*c_setsockopt_fn_type)(c_socket_t socket, int level, int option_name, const char* option_value, int option_len);
 c_setsockopt_fn_type c_setsockopt = &setsockopt;
 typedef int (*c_getsockopt_fn_type)(c_socket_t socket, int level, int option_name, char* option_value, int* option_len);
 c_getsockopt_fn_type c_getsockopt = &getsockopt;
-#elif defined(LINUX)
-typedef int (*c_setsockopt_fn_type)(c_socket_t socket, int level, int option_name, const void* option_value, socklen_t option_len);
-c_setsockopt_fn_type c_setsockopt = &setsockopt;
-typedef int (*c_getsockopt_fn_type)(c_socket_t socket, int level, int option_name, void* option_value, socklen_t* option_len);
-c_getsockopt_fn_type c_getsockopt = &getsockopt;
 #endif
 
-#if defined(DARWIN)
+#if defined(UNIX)
 typedef int (*c_select_fn_type)(int nfds, fd_set* readfds, fd_set* writefds, fd_set* errorfds, struct timeval* timeout);
 c_select_fn_type c_select = &select;
-#elif defined(WINDOWS)
+#elif defined(WIN32)
 typedef int (*c_select_fn_type)(int nfds, fd_set* readfds, fd_set* writefds, fd_set* errorfds, const struct timeval* timeout);
-c_select_fn_type c_select = &select;
-#elif defined(LINUX)
-typedef int (*c_select_fn_type)(int nfds, fd_set* readfds, fd_set* writefds, fd_set* errorfds, struct timeval* timeout);
 c_select_fn_type c_select = &select;
 #endif
 
@@ -91,12 +80,10 @@ status_t cross_getaddrinfo(const char* node, const char* service, const struct a
     status_t status = C_ERROR;
     status = c_getaddrinfo(node, service, hints, res);
     if (status == C_ERROR) {
-#if defined(DARWIN)
+#if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
-#elif defined(WINDOWS)
+#elif defined(WIN32)
 // TODO
-#elif defined(LINUX)
-        memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #endif
     }
 
@@ -113,12 +100,10 @@ c_socket_t cross_open_socket(int domain, int type, int protocol, char* errorMsg)
     c_socket_t socket = INVALID_SOCKET;
     socket = c_socket(domain, type, protocol);
     if (socket == INVALID_SOCKET) {
-#if defined(DARWIN)
+#if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
-#elif defined(WINDOWS)
+#elif defined(WIN32)
 // TODO
-#elif defined(LINUX)
-        memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #endif
     }
 
@@ -130,12 +115,10 @@ status_t cross_connect_socket(c_socket_t socket, const struct sockaddr* addr, so
     status_t status = C_ERROR;
     status = c_connect(socket, addr, addrlen);
     if (status == C_ERROR) {
-#if defined(DARWIN)
+#if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
-#elif defined(WINDOWS)
+#elif defined(WIN32)
 // TODO
-#elif defined(LINUX)
-        memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #endif
     }
 
@@ -147,12 +130,10 @@ status_t cross_bind_socket(c_socket_t socket, const struct sockaddr* addr, sockl
     status_t status = C_ERROR;
     status = c_bind(socket, addr, addrlen);
     if (status == C_ERROR) {
-#if defined(DARWIN)
+#if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
-#elif defined(WINDOWS)
+#elif defined(WIN32)
 // TODO
-#elif defined(LINUX)
-        memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #endif
     }
 
@@ -164,12 +145,10 @@ status_t cross_listen_socket(c_socket_t socket, int backlog, char* errorMsg) {
     status_t status = C_ERROR;
     status = c_listen(socket, backlog);
     if (status == C_ERROR) {
-#if defined(DARWIN)
+#if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
-#elif defined(WINDOWS)
+#elif defined(WIN32)
 // TODO
-#elif defined(LINUX)
-        memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #endif
     }
 
@@ -181,12 +160,10 @@ status_t cross_accept_socket(c_socket_t socket, struct sockaddr* addr, socklen_t
     status_t status = C_ERROR;
     status = c_accept(socket, addr, addrlen);
     if (status == C_ERROR) {
-#if defined(DARWIN)
+#if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
-#elif defined(WINDOWS)
+#elif defined(WIN32)
 // TODO
-#elif defined(LINUX)
-        memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #endif
     }
 
@@ -198,12 +175,10 @@ status_t cross_close_socket(c_socket_t socket, char* errorMsg) {
     status_t status = C_ERROR;
     status = c_close_socket(socket);
     if (status == C_ERROR) {
-#if defined(DARWIN)
+#if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
-#elif defined(WINDOWS)
+#elif defined(WIN32)
 // TODO
-#elif defined(LINUX)
-        memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #endif
     }
 
@@ -215,12 +190,10 @@ status_t cross_shutdown_socket(c_socket_t socket, int how, char* errorMsg) {
     status_t status = C_ERROR;
     status = c_shutdown_socket(socket, how);
     if (status == C_ERROR) {
-#if defined(DARWIN)
+#if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
-#elif defined(WINDOWS)
+#elif defined(WIN32)
 // TODO
-#elif defined(LINUX)
-        memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #endif
     }
 
@@ -233,12 +206,10 @@ ssize_t cross_recv_socket(c_socket_t socket, void* buf, size_t len, int flags, c
     status = c_recv(socket, buf, len, flags);
     // printf("[c_recv]: %s\n", (char*)buf);
     if (status == C_ERROR) {
-#if defined(DARWIN)
+#if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
-#elif defined(WINDOWS)
+#elif defined(WIN32)
 // TODO
-#elif defined(LINUX)
-        memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #endif
     }
 
@@ -250,12 +221,10 @@ ssize_t cross_recvfrom_socket(c_socket_t socket, void* buf, size_t len, int flag
     status_t status = C_ERROR;
     status = c_recvfrom(socket, buf, len, flags, src_addr, addrlen);
     if (status == C_ERROR) {
-#if defined(DARWIN)
+#if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
-#elif defined(WINDOWS)
+#elif defined(WIN32)
 // TODO
-#elif defined(LINUX)
-        memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #endif
     }
 
@@ -267,12 +236,10 @@ ssize_t cross_send_socket(c_socket_t socket, void* buf, size_t len, int flags, c
     status_t status = C_ERROR;
     status = c_send(socket, buf, len, flags);
     if (status == C_ERROR) {
-#if defined(DARWIN)
+#if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
-#elif defined(WINDOWS)
+#elif defined(WIN32)
 // TODO
-#elif defined(LINUX)
-        memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #endif
     }
 
@@ -284,12 +251,10 @@ ssize_t cross_sendto_socket(c_socket_t socket, void* buf, size_t len, int flags,
     status_t status = C_ERROR;
     status = c_sendto(socket, buf, len, flags, dest_addr, addrlen);
     if (status == C_ERROR) {
-#if defined(DARWIN)
+#if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
-#elif defined(WINDOWS)
+#elif defined(WIN32)
 // TODO
-#elif defined(LINUX)
-        memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #endif
     }
 
@@ -301,12 +266,10 @@ int cross_setsockopt(c_socket_t socket, int level, int option_name, const void* 
     status_t status = C_ERROR;
     status = c_setsockopt(socket, level, option_name, option_value, option_len);
     if (status == C_ERROR) {
-#if defined(DARWIN)
+#if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
-#elif defined(WINDOWS)
+#elif defined(WIN32)
 // TODO
-#elif defined(LINUX)
-        memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #endif
     }
 
@@ -318,12 +281,10 @@ int cross_getsockopt(c_socket_t socket, int level, int option_name, void* option
     status_t status = C_ERROR;
     status = c_getsockopt(socket, level, option_name, option_value, option_len);
     if (status == C_ERROR) {
-#if defined(DARWIN)
+#if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
-#elif defined(WINDOWS)
+#elif defined(WIN32)
 // TODO
-#elif defined(LINUX)
-        memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #endif
     }
 
@@ -335,12 +296,10 @@ int cross_select(int nfds, fd_set* readfds, fd_set* writefds, fd_set* errorfds, 
     status_t status = C_ERROR;
     status = c_select(nfds, readfds, writefds, errorfds, timeout);
     if (status == C_ERROR) {
-#if defined(DARWIN)
+#if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
-#elif defined(WINDOWS)
+#elif defined(WIN32)
 // TODO
-#elif defined(LINUX)
-        memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #endif
     }
 

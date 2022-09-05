@@ -2,11 +2,12 @@ cmake_minimum_required(VERSION 3.14)
 project(CSocketLib VERSION 0.1.0)
 
 set(PROJECT_SOURCES
-    "./darwin_config.h"
-    "./linux_config.h"
-    "./win_config.h"
-    "./config.h"
     "./core.h"
+    "./socket.h"
+    "./socket_imp_unix.cpp"
+    "./socket_imp_win32.cpp"
+    "./error.h"
+    "./error.cpp"
     "./CSocket.h"
     "./CSocket.cpp"
 )
