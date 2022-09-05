@@ -91,6 +91,13 @@ status_t cross_getaddrinfo(const char* node, const char* service, const struct a
     status_t status = C_ERROR;
     status = c_getaddrinfo(node, service, hints, res);
     if (status == C_ERROR) {
+#if defined(DARWIN)
+        memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
+#elif defined(WINDOWS)
+// TODO
+#elif defined(LINUX)
+        memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
+#endif
     }
 
     return status;
