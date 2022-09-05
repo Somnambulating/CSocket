@@ -28,7 +28,12 @@ int main() {
         return -1;
     }
 
-    if (cross_setsockopt(socket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt), errorMsg) == C_ERROR) {
+    if (cross_setsockopt(socket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt), errorMsg) == C_ERROR) {
+        printf("[Error]: cross_setsockopt %s \n", errorMsg);
+        return -1;
+    }
+
+    if (cross_setsockopt(socket, SOL_SOCKET, SO_REUSEPORT, &opt, sizeof(opt), errorMsg) == C_ERROR) {
         printf("[Error]: cross_setsockopt %s \n", errorMsg);
         return -1;
     }
