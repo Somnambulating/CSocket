@@ -93,14 +93,14 @@ int main() {
             }
             printf("[Message]: %s\n", recvBuffer);
 
-            // send
-            memset(sendBuffer, 0, BUFFER_SIZE);
-            fgets(sendBuffer, BUFFER_SIZE, stdin);
-            status_size = cross_send_socket(newSocketFD, sendBuffer, BUFFER_SIZE, 0, errorMsg);
-            if (status_size == C_ERROR) {
-                printf("[Error]: cross_send_socket %s \n", errorMsg);
-                break;
-            }
+            // // send
+            // memset(sendBuffer, 0, BUFFER_SIZE);
+            // fgets(sendBuffer, BUFFER_SIZE, stdin);
+            // status_size = cross_send_socket(newSocketFD, sendBuffer, BUFFER_SIZE, 0, errorMsg);
+            // if (status_size == C_ERROR) {
+            //     printf("[Error]: cross_send_socket %s \n", errorMsg);
+            //     break;
+            // }
         }
     }
 

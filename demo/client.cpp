@@ -41,22 +41,26 @@ int main() {
         memset(sendBuffer, 0, BUFFER_SIZE);
         fgets(sendBuffer, BUFFER_SIZE, stdin);
         status_size = cross_send_socket(socketFd, sendBuffer, BUFFER_SIZE, 0, errorMsg);
-        if (status == C_ERROR) {
+        if (status_size == C_ERROR) {
             printf("[Error]: cross_send_socket %s \n", errorMsg);
             break;
         }
-
-        // recv
-        memset(recvBuffer, 0, BUFFER_SIZE);
-        status_size = cross_recv_socket(socketFd, recvBuffer, BUFFER_SIZE, 0, errorMsg);
-        if (status == C_ERROR) {
-            printf("[Error]: cross_recv_socket %s \n", errorMsg);
+        if (status_size == 0) {
+            printf("[Error]: cross_send_socket send failed \n");
             break;
         }
 
-        printf("[Message]: %s\n", recvBuffer);
+        // // recv
+        // memset(recvBuffer, 0, BUFFER_SIZE);
+        // status_size = cross_recv_socket(socketFd, recvBuffer, BUFFER_SIZE, 0, errorMsg);
+        // if (status_size == C_ERROR) {
+        //     printf("[Error]: cross_recv_socket %s \n", errorMsg);
+        //     break;
+        // }
 
-    } while (status_size != C_ERROR);
+        // printf("[Message]: %s\n", recvBuffer);
+
+    } while (1);
 
     // shutdown
     if (socketFd != INVALID_SOCKET) {
