@@ -9,5 +9,5 @@ cmake ..
 ```
 
 ## Usage
-`server`: Visit [server](./demo/server.cpp)
-`client`: Visit [client](./demo/client.cpp)
+- `server`: Visit [server](./demo/server.cpp)
+- `client`: Visit [client](./demo/client.cpp)
