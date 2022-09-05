@@ -13,4 +13,6 @@
 #define CR     (u_char) '\r'
 #define CRLF   "\r\n"
 
+#define ERROR_MESSAGE_MAX_LEN 128
+
 #endif /* CORE_H_ */
