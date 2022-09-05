@@ -41,8 +41,6 @@ int c_blocking(c_socket_t s);
 
 #endif
 
-
-
 /*
 @FunctionName: cross_open_socket
 @domain:
@@ -211,5 +209,53 @@ int cross_setsockopt(c_socket_t socket, int level, int option_name, const void* 
           On error, -1 is returned and errorMsg is set to indicate the error.
 */
 int cross_getsockopt(c_socket_t socket, int level, int option_name, void* option_value, socklen_t* option_len, char* errorMsg);
+
+/*
+@FunctionName: cross_select
+@nfds:
+@readfds:
+@writefds:
+@errorfds:
+@timeout:
+@errorMsg:
+@return:  On success, return the number of file descriptors contained in the three returned descriptor sets
+          (that is, the total number of bits that are set in readfds, writefds, exceptfds).
+          The return value may be zero if the timeout expired before any file descriptors became ready.
+          On error, -1 is returned and errorMsg is set to indicate the error.
+*/
+int cross_select(int nfds, fd_set* readfds, fd_set* writefds, fd_set* errorfds, struct timeval* timeout, char* errorMsg);
+
+/*
+@FunctionName: cross_FD_CLR
+@fd:
+@set
+@return:  This function does not return a value.
+*/
+void cross_FD_CLR(c_socket_t fd, fd_set* set);
+
+/*
+@FunctionName: cross_FD_ISSET
+@fd:
+@set
+@return:  After calling select(), the FD_ISSET() macro can be used to test if a file descriptor
+          is still present in a set.  FD_ISSET() returns nonzero if
+          the file descriptor fd is present in set, and zero if it is not.
+*/
+int cross_FD_ISSET(c_socket_t fd, fd_set* set);
+
+/*
+@FunctionName: cross_FD_SET
+@fd:
+@set
+@return:  This function does not return a value.
+*/
+void cross_FD_SET(c_socket_t fd, fd_set* set);
+
+/*
+@FunctionName: cross_FD_ZERO
+@set:
+@return:  This function does not return a value.
+*/
+void cross_FD_ZERO(fd_set* set);
 
 #endif /* CSOCKET_H_ */

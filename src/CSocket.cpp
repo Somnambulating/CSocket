@@ -70,6 +70,22 @@ typedef int (*c_getsockopt_fn_type)(c_socket_t socket, int level, int option_nam
 c_getsockopt_fn_type c_getsockopt = &getsockopt;
 #endif
 
+#if defined(DARWIN)
+typedef int (*c_select_fn_type)(int nfds, fd_set* readfds, fd_set* writefds, fd_set* errorfds, struct timeval* timeout);
+c_select_fn_type c_select = &select;
+#elif defined(WINDOWS)
+typedef int (*c_select_fn_type)(int nfds, fd_set* readfds, fd_set* writefds, fd_set* errorfds, const struct timeval* timeout);
+c_select_fn_type c_select = &select;
+#elif defined(LINUX)
+typedef int (*c_select_fn_type)(int nfds, fd_set* readfds, fd_set* writefds, fd_set* errorfds, struct timeval* timeout);
+c_select_fn_type c_select = &select;
+#endif
+
+#define c_FD_CLR FD_CLR
+#define c_FD_ISSET FD_ISSET
+#define c_FD_SET FD_SET
+#define c_FD_ZERO FD_ZERO
+
 // TODO
 status_t cross_getaddrinfo(const char* node, const char* service, const struct addrinfo* hints, struct addrinfo** res, char* errorMsg) {
     status_t status = C_ERROR;
@@ -305,4 +321,37 @@ int cross_getsockopt(c_socket_t socket, int level, int option_name, void* option
     }
 
     return status;
+}
+
+// TODO
+int cross_select(int nfds, fd_set* readfds, fd_set* writefds, fd_set* errorfds, struct timeval* timeout, char* errorMsg) {
+    status_t status = C_ERROR;
+    status = c_select(nfds, readfds, writefds, errorfds, timeout);
+    if (status == C_ERROR) {
+#if defined(DARWIN)
+        memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
+#elif defined(WINDOWS)
+// TODO
+#elif defined(LINUX)
+        memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
+#endif
+    }
+
+    return status;
+}
+
+void cross_FD_CLR(c_socket_t fd, fd_set* set) {
+    c_FD_CLR(fd, set);
+}
+
+int cross_FD_ISSET(c_socket_t fd, fd_set* set) {
+    return c_FD_ISSET(fd, set);
+}
+
+void cross_FD_SET(c_socket_t fd, fd_set* set) {
+    c_FD_SET(fd, set);
+}
+
+void cross_FD_ZERO(fd_set* set) {
+    c_FD_ZERO(set);
 }
