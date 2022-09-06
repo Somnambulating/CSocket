@@ -3,19 +3,33 @@
 
 #include "core.h"
 
+// TODO: ipv6
+struct SocketUnixInfo {
+    c_socket_t sock_fd_;
+    c_socket_t new_sock_fd_;
+    char address_[16];
+    in_port_t port_;
+    sa_family_t family_;
+};
+
 class SocketUnixImp {
-public:
+   public:
     SocketUnixImp();
+    SocketUnixImp(const char* address, in_port_t port, sa_family_t family);
     ~SocketUnixImp();
 
-    // c_socket_t open_socket();
-    // status_t connect();
-    // status_t bind();
-    // status_t listen();
-    // c_socket_t accept();
+    c_socket_t open_socket(int domain, int type, int protocol);
+    status_t connect();
+    status_t bind();
+    status_t listen(int backlog);
+    c_socket_t accept();
+    status_t shutdown(int how);
+    status_t close();
 
-private:
-    c_socket_t sockFd_;
+    status_t setsockopt(int level, int option_name, const void *option_value, socklen_t option_len);
+
+   private:
+    SocketUnixInfo socket_info_;
 };
 
 typedef SocketUnixImp SocketImp;
