@@ -15,7 +15,7 @@ int main() {
     // serv_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
     serv_addr.sin_addr.s_addr = INADDR_ANY;
     serv_addr.sin_port = htons(10001);
-    status_t status = C_ERROR;
+    status_t status = C_STATUS_ERROR;
     char recvBuffer[BUFFER_SIZE];
     char sendBuffer[BUFFER_SIZE];
     int opt = 1;
@@ -24,32 +24,32 @@ int main() {
 
     // socket
     c_socket_t socketFD = cross_open_socket(AF_INET, SOCK_STREAM, IPPROTO_TCP, errorMsg);
-    if (socketFD == C_ERROR) {
+    if (socketFD == C_STATUS_ERROR) {
         printf("[Error]: cross_open_socket %s \n", errorMsg);
         return -1;
     }
 
     // setsockopt
-    if (cross_setsockopt(socketFD, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt), errorMsg) == C_ERROR) {
+    if (cross_setsockopt(socketFD, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt), errorMsg) == C_STATUS_ERROR) {
         printf("[Error]: cross_setsockopt %s \n", errorMsg);
         return -1;
     }
 
-    if (cross_setsockopt(socketFD, SOL_SOCKET, SO_REUSEPORT, &opt, sizeof(opt), errorMsg) == C_ERROR) {
+    if (cross_setsockopt(socketFD, SOL_SOCKET, SO_REUSEPORT, &opt, sizeof(opt), errorMsg) == C_STATUS_ERROR) {
         printf("[Error]: cross_setsockopt %s \n", errorMsg);
         return -1;
     }
 
     // bind
     status = cross_bind_socket(socketFD, (struct sockaddr*)&serv_addr, sizeof(serv_addr), errorMsg);
-    if (status == C_ERROR) {
+    if (status == C_STATUS_ERROR) {
         printf("[Error]: cross_bind_socket %s \n", errorMsg);
         return -1;
     }
 
     // listen
     status = cross_listen_socket(socketFD, 10, errorMsg);
-    if (status == C_ERROR) {
+    if (status == C_STATUS_ERROR) {
         printf("[Error]: cross_listen_socket %s \n", errorMsg);
         return -1;
     }
@@ -66,7 +66,7 @@ int main() {
 
         // select
         status = cross_select(socketFD+1, &rset, NULL, NULL, NULL, errorMsg);
-        if (status == C_ERROR) {
+        if (status == C_STATUS_ERROR) {
             printf("[Error]: cross_select %s \n", errorMsg);
             break;
         }
@@ -74,7 +74,7 @@ int main() {
         if (cross_FD_ISSET(socketFD, &rset)) {
             // accept
             int newSocketFD = cross_accept_socket(socketFD, (struct sockaddr*)&serv_addr, &addrlen, errorMsg);
-            if (newSocketFD == C_ERROR) {
+            if (newSocketFD == C_STATUS_ERROR) {
                 printf("[Error]: cross_accept_socket %s \n", errorMsg);
                 break;
             }
@@ -82,7 +82,7 @@ int main() {
             // recv
             memset(recvBuffer, 0, BUFFER_SIZE);
             status_size = cross_recv_socket(newSocketFD, recvBuffer, BUFFER_SIZE, 0, errorMsg);
-            if (status_size == C_ERROR) {
+            if (status_size == C_STATUS_ERROR) {
                 printf("[Error]: cross_recv_socket %s\n", errorMsg);
                 break;
             }
@@ -97,7 +97,7 @@ int main() {
             // memset(sendBuffer, 0, BUFFER_SIZE);
             // fgets(sendBuffer, BUFFER_SIZE, stdin);
             // status_size = cross_send_socket(newSocketFD, sendBuffer, BUFFER_SIZE, 0, errorMsg);
-            // if (status_size == C_ERROR) {
+            // if (status_size == C_STATUS_ERROR) {
             //     printf("[Error]: cross_send_socket %s \n", errorMsg);
             //     break;
             // }
@@ -107,7 +107,7 @@ int main() {
     // shutdown
     if (socketFD != INVALID_SOCKET) {
         status = cross_shutdown_socket(socketFD, SHUT_RDWR, errorMsg);
-        if (status == C_ERROR) {
+        if (status == C_STATUS_ERROR) {
             printf("[Error]: cross_shutdown_socket %s \n", errorMsg);
             return -1;
         }
@@ -115,7 +115,7 @@ int main() {
 
     // close
     status = cross_close_socket(socketFD, errorMsg);
-    if (status == C_ERROR) {
+    if (status == C_STATUS_ERROR) {
         printf("[Error]: cross_close_socket %s \n", errorMsg);
         return -1;
     }

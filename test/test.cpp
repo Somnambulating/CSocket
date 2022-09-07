@@ -13,7 +13,7 @@ TEST(SocketClientTest, BasicAssertions) {
     // serv_addr.sin_addr.s_addr = INADDR_ANY;
     serv_addr.sin_port = htons(10000);
     socklen_t sockLen = sizeof(serv_addr);
-    status_t status = C_ERROR;
+    status_t status = C_STATUS_ERROR;
 
     // socket
     c_socket_t socket = cross_open_socket(AF_INET, SOCK_STREAM, IPPROTO_TCP, errorMsg);
@@ -21,10 +21,10 @@ TEST(SocketClientTest, BasicAssertions) {
 
     // connect
     status = cross_connect_socket(socket, (struct sockaddr*)&serv_addr, sockLen, errorMsg);
-    if (status == C_ERROR) {
+    if (status == C_STATUS_ERROR) {
         printf("Error: cross_connect_socket %s \n", errorMsg);
     }
-    EXPECT_NE(status, C_ERROR);
+    EXPECT_NE(status, C_STATUS_ERROR);
 }
 
 TEST(SocketServerTest, BasicAssertions) {
@@ -37,7 +37,7 @@ TEST(SocketServerTest, BasicAssertions) {
     // serv_addr.sin_addr.s_addr = INADDR_ANY;
     serv_addr.sin_port = htons(10000);
     socklen_t sockLen = sizeof(serv_addr);
-    status_t status = C_ERROR;
+    status_t status = C_STATUS_ERROR;
     c_socket_t newSocket = -1;
 
     // socket
@@ -46,43 +46,43 @@ TEST(SocketServerTest, BasicAssertions) {
 
     // connect
     // status_t status = cross_connect_socket(socket, (struct sockaddr*)&serv_addr, sockLen, errorMsg);
-    // if (status == C_ERROR) {
+    // if (status == C_STATUS_ERROR) {
     //     printf("Error: cross_connect_socket %s \n", errorMsg);
     // }
-    // EXPECT_NE(status, C_ERROR);
+    // EXPECT_NE(status, C_STATUS_ERROR);
 
     // bind
     status = cross_bind_socket(socket, (struct sockaddr*)&serv_addr, sockLen, errorMsg);
-    if (status == C_ERROR) {
+    if (status == C_STATUS_ERROR) {
         printf("Error: cross_bind_socket %s \n", errorMsg);
     }
-    EXPECT_NE(status, C_ERROR);
+    EXPECT_NE(status, C_STATUS_ERROR);
 
     // listen
     status = cross_listen_socket(socket, 10, errorMsg);
-    if (status == C_ERROR) {
+    if (status == C_STATUS_ERROR) {
         printf("Error: cross_listen_socket %s \n", errorMsg);
     }
-    EXPECT_NE(status, C_ERROR);
+    EXPECT_NE(status, C_STATUS_ERROR);
 
     // accept
     // newSocket = cross_accept_socket(socket, (struct sockaddr*)&serv_addr, &sockLen, errorMsg);
-    // if (newSocket == C_ERROR) {
+    // if (newSocket == C_STATUS_ERROR) {
     //     printf("Error: cross_accept_socket %s \n", errorMsg);
     // }
-    // EXPECT_NE(newSocket, C_ERROR);
+    // EXPECT_NE(newSocket, C_STATUS_ERROR);
 
     // shutdown
     // status = cross_shutdown_socket(socket, SHUT_RDWR, errorMsg);
-    // if (status == C_ERROR) {
+    // if (status == C_STATUS_ERROR) {
     //     printf("Error: cross_shutdown_socket %s \n", errorMsg);
     // }
-    // EXPECT_NE(status, C_ERROR);
+    // EXPECT_NE(status, C_STATUS_ERROR);
 
     // close
     status = cross_close_socket(socket, errorMsg);
-    if (status == C_ERROR) {
+    if (status == C_STATUS_ERROR) {
         printf("Error: cross_close_socket %s \n", errorMsg);
     }
-    EXPECT_NE(status, C_ERROR);
+    EXPECT_NE(status, C_STATUS_ERROR);
 }

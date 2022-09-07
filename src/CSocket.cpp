@@ -77,9 +77,9 @@ c_select_fn_type c_select = &select;
 
 // TODO
 status_t cross_getaddrinfo(const char* node, const char* service, const struct addrinfo* hints, struct addrinfo** res, char* errorMsg) {
-    status_t status = C_ERROR;
+    status_t status = C_STATUS_ERROR;
     status = c_getaddrinfo(node, service, hints, res);
-    if (status == C_ERROR) {
+    if (status == C_STATUS_ERROR) {
 #if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #elif defined(WIN32)
@@ -112,9 +112,9 @@ c_socket_t cross_open_socket(int domain, int type, int protocol, char* errorMsg)
 
 // TODO
 status_t cross_connect_socket(c_socket_t socket, const struct sockaddr* addr, socklen_t addrlen, char* errorMsg) {
-    status_t status = C_ERROR;
+    status_t status = C_STATUS_ERROR;
     status = c_connect(socket, addr, addrlen);
-    if (status == C_ERROR) {
+    if (status == C_STATUS_ERROR) {
 #if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #elif defined(WIN32)
@@ -127,9 +127,9 @@ status_t cross_connect_socket(c_socket_t socket, const struct sockaddr* addr, so
 
 // TODO
 status_t cross_bind_socket(c_socket_t socket, const struct sockaddr* addr, socklen_t addrlen, char* errorMsg) {
-    status_t status = C_ERROR;
+    status_t status = C_STATUS_ERROR;
     status = c_bind(socket, addr, addrlen);
-    if (status == C_ERROR) {
+    if (status == C_STATUS_ERROR) {
 #if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #elif defined(WIN32)
@@ -142,9 +142,9 @@ status_t cross_bind_socket(c_socket_t socket, const struct sockaddr* addr, sockl
 
 // TODO
 status_t cross_listen_socket(c_socket_t socket, int backlog, char* errorMsg) {
-    status_t status = C_ERROR;
+    status_t status = C_STATUS_ERROR;
     status = c_listen(socket, backlog);
-    if (status == C_ERROR) {
+    if (status == C_STATUS_ERROR) {
 #if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #elif defined(WIN32)
@@ -157,9 +157,9 @@ status_t cross_listen_socket(c_socket_t socket, int backlog, char* errorMsg) {
 
 // TODO
 status_t cross_accept_socket(c_socket_t socket, struct sockaddr* addr, socklen_t* addrlen, char* errorMsg) {
-    status_t status = C_ERROR;
+    status_t status = C_STATUS_ERROR;
     status = c_accept(socket, addr, addrlen);
-    if (status == C_ERROR) {
+    if (status == C_STATUS_ERROR) {
 #if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #elif defined(WIN32)
@@ -172,9 +172,9 @@ status_t cross_accept_socket(c_socket_t socket, struct sockaddr* addr, socklen_t
 
 // TODO
 status_t cross_close_socket(c_socket_t socket, char* errorMsg) {
-    status_t status = C_ERROR;
+    status_t status = C_STATUS_ERROR;
     status = c_close_socket(socket);
-    if (status == C_ERROR) {
+    if (status == C_STATUS_ERROR) {
 #if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #elif defined(WIN32)
@@ -187,9 +187,9 @@ status_t cross_close_socket(c_socket_t socket, char* errorMsg) {
 
 // TODO
 status_t cross_shutdown_socket(c_socket_t socket, int how, char* errorMsg) {
-    status_t status = C_ERROR;
+    status_t status = C_STATUS_ERROR;
     status = c_shutdown_socket(socket, how);
-    if (status == C_ERROR) {
+    if (status == C_STATUS_ERROR) {
 #if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #elif defined(WIN32)
@@ -202,10 +202,10 @@ status_t cross_shutdown_socket(c_socket_t socket, int how, char* errorMsg) {
 
 // TODO
 ssize_t cross_recv_socket(c_socket_t socket, void* buf, size_t len, int flags, char* errorMsg) {
-    status_t status = C_ERROR;
+    status_t status = C_STATUS_ERROR;
     status = c_recv(socket, buf, len, flags);
     // printf("[c_recv]: %s\n", (char*)buf);
-    if (status == C_ERROR) {
+    if (status == C_STATUS_ERROR) {
 #if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #elif defined(WIN32)
@@ -218,9 +218,9 @@ ssize_t cross_recv_socket(c_socket_t socket, void* buf, size_t len, int flags, c
 
 // TODO
 ssize_t cross_recvfrom_socket(c_socket_t socket, void* buf, size_t len, int flags, struct sockaddr* src_addr, socklen_t* addrlen, char* errorMsg) {
-    status_t status = C_ERROR;
+    status_t status = C_STATUS_ERROR;
     status = c_recvfrom(socket, buf, len, flags, src_addr, addrlen);
-    if (status == C_ERROR) {
+    if (status == C_STATUS_ERROR) {
 #if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #elif defined(WIN32)
@@ -233,9 +233,9 @@ ssize_t cross_recvfrom_socket(c_socket_t socket, void* buf, size_t len, int flag
 
 // TODO
 ssize_t cross_send_socket(c_socket_t socket, void* buf, size_t len, int flags, char* errorMsg) {
-    status_t status = C_ERROR;
+    status_t status = C_STATUS_ERROR;
     status = c_send(socket, buf, len, flags);
-    if (status == C_ERROR) {
+    if (status == C_STATUS_ERROR) {
 #if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #elif defined(WIN32)
@@ -248,9 +248,9 @@ ssize_t cross_send_socket(c_socket_t socket, void* buf, size_t len, int flags, c
 
 // TODO
 ssize_t cross_sendto_socket(c_socket_t socket, void* buf, size_t len, int flags, struct sockaddr* dest_addr, socklen_t addrlen, char* errorMsg) {
-    status_t status = C_ERROR;
+    status_t status = C_STATUS_ERROR;
     status = c_sendto(socket, buf, len, flags, dest_addr, addrlen);
-    if (status == C_ERROR) {
+    if (status == C_STATUS_ERROR) {
 #if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #elif defined(WIN32)
@@ -263,9 +263,9 @@ ssize_t cross_sendto_socket(c_socket_t socket, void* buf, size_t len, int flags,
 
 // TODO
 int cross_setsockopt(c_socket_t socket, int level, int option_name, const void* option_value, socklen_t option_len, char* errorMsg) {
-    status_t status = C_ERROR;
+    status_t status = C_STATUS_ERROR;
     status = c_setsockopt(socket, level, option_name, option_value, option_len);
-    if (status == C_ERROR) {
+    if (status == C_STATUS_ERROR) {
 #if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #elif defined(WIN32)
@@ -278,9 +278,9 @@ int cross_setsockopt(c_socket_t socket, int level, int option_name, const void* 
 
 // TODO
 int cross_getsockopt(c_socket_t socket, int level, int option_name, void* option_value, socklen_t* option_len, char* errorMsg) {
-    status_t status = C_ERROR;
+    status_t status = C_STATUS_ERROR;
     status = c_getsockopt(socket, level, option_name, option_value, option_len);
-    if (status == C_ERROR) {
+    if (status == C_STATUS_ERROR) {
 #if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #elif defined(WIN32)
@@ -293,9 +293,9 @@ int cross_getsockopt(c_socket_t socket, int level, int option_name, void* option
 
 // TODO
 int cross_select(int nfds, fd_set* readfds, fd_set* writefds, fd_set* errorfds, struct timeval* timeout, char* errorMsg) {
-    status_t status = C_ERROR;
+    status_t status = C_STATUS_ERROR;
     status = c_select(nfds, readfds, writefds, errorfds, timeout);
-    if (status == C_ERROR) {
+    if (status == C_STATUS_ERROR) {
 #if defined(UNIX)
         memcpy(errorMsg, strerror(errno), ERROR_MESSAGE_MAX_LEN);
 #elif defined(WIN32)

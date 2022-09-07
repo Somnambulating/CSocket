@@ -1,8 +1,7 @@
-#include "core.h"
 #ifdef UNIX
+
 #include <assert.h>
 #include <string.h>
-
 #include "error.h"
 #include "socket_imp_unix.h"
 

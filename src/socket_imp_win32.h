@@ -2,6 +2,7 @@
 #define SOCKET_IMP_WIN32_H_
 
 #include "core.h"
+#include "socket_base.h"
 
 class SocketWin32Imp {
 public:
@@ -10,7 +11,5 @@ public:
     ~SocketWin32Imp();
 
 };
-
-typedef SocketWin32Imp SocketImp;
 
 #endif /* SOCKET_IMP_WIN32_H_ */

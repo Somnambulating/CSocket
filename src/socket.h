@@ -7,6 +7,6 @@
 #include "socket_imp_win32.h"
 #endif
 
-typedef SocketImp Socket;
+typedef SocketUnixImp Socket;
 
-#endif /* SOCKET_H_ */
+#endif 

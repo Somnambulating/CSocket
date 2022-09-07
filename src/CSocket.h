@@ -2,6 +2,7 @@
 #define CSOCKET_H_
 
 #include "core.h"
+#include "error.h"
 
 #if (HAVE_FIONBIO)
 
