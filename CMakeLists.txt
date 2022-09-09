@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 11)
 if(APPLE)
     add_compile_options(
         -DUNIX
-        -DHAVE_SELECT
+        -DHAVE_POLL
         -DHAVE_INET6
         -DHAVE_FIONBIO
         -DHAVE_UNIX_DOMAIN
@@ -20,7 +20,7 @@ elseif(WIN32)
 elseif(UNIX)
     add_compile_options(
         -DUNIX
-        -DHAVE_SELECT
+        -DHAVE_POLL
         -DHAVE_INET6
         -DHAVE_UNIX_DOMAIN
     )

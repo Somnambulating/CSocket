@@ -6,11 +6,11 @@
 
 // TODO: ipv6
 struct SocketUnixInfo {
-    c_socket_t sock_fd_;
-    c_socket_t new_sock_fd_;
-    char address_[16];
-    in_port_t port_;
-    sa_family_t family_;
+    c_socket_t sock_fd;
+    c_socket_t new_sock_fd;
+    char address[16];
+    in_port_t port;
+    sa_family_t family;
 };
 
 class SocketUnixImp: public SocketBase {

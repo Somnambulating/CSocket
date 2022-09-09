@@ -1,9 +1,10 @@
 #ifdef UNIX
 
+#include "sockaddr_unix.h"
+
 #include <assert.h>
 
 #include "core.h"
-#include "sockaddr_unix.h"
 
 uint16_t c_htons(uint16_t hostshort) { return htons(hostshort); }
 
@@ -14,12 +15,12 @@ uint32_t c_htonl(uint32_t hostlong) { return htonl(hostlong); }
 uint32_t c_ntohl(uint32_t netlong) { return ntohl(netlong); }
 
 int c_inet_pton(int af, const char* src, void* dst) {
-  return inet_pton(af, src, dst);
+    return inet_pton(af, src, dst);
 }
 
 const char* c_inet_ntop(int af, const void* src, char* dst, size_t size) {
-  assert(size <= (c_socket_t)-1);
-  return inet_ntop(af, src, dst, static_cast<c_socket_t>(size));
+    assert(size <= (c_socket_t)-1);
+    return inet_ntop(af, src, dst, static_cast<c_socket_t>(size));
 }
 
 #endif /* UNIX */

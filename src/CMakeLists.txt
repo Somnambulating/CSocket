@@ -13,6 +13,7 @@ set(PROJECT_SOURCES
     "./socket_imp_win32.cpp"
     "./error.h"
     "./error.cpp"
+    "./event.h"
     "./CSocket.h"
     "./CSocket.cpp"
 )
