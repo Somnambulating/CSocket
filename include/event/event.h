@@ -3,13 +3,14 @@
 
 #if defined(UNIX)
 #if defined(HAVE_POLL)
-#include "event_poll_unix.h"
+#include "event/event_engine_poll_unix.h"
+typedef EventEnginePollUnixImp EventEngine;
 #endif
 #endif  // UNIX
 
 #if defined(WIN32)
 #if defined(HAVE_SELECT)
-#include "event_select_win32.h"
+#include "event/event_engine_select_win32.h"
 #endif
 #endif  // WIN32
 

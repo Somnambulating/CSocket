@@ -2,9 +2,9 @@
 #define SOCKET_H_
 
 #if defined(UNIX)
-#include "socket_imp_unix.h"
+#include "socket/socket_imp_unix.h"
 #elif defined(WIN32)
-#include "socket_imp_win32.h"
+#include "socket/socket_imp_win32.h"
 #endif
 
 typedef SocketUnixImp Socket;

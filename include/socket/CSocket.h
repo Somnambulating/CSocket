@@ -1,8 +1,8 @@
 #ifndef CSOCKET_H_
 #define CSOCKET_H_
 
-#include "core.h"
-#include "error.h"
+#include "core/core.h"
+#include "core/error.h"
 
 #if (HAVE_FIONBIO)
 

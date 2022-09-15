@@ -6,9 +6,9 @@
 #define CRLF   "\r\n"
 
 #if defined(UNIX)
-#include "core_unix.h"
+#include "core/core_unix.h"
 #elif defined(WIN32)
-#include "core_win32.h"
+#include "core/core_win32.h"
 #endif
 
 #endif /* CORE_H_ */

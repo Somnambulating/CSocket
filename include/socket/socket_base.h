@@ -1,7 +1,16 @@
 #ifndef SOCKET_BASE_H_
 #define SOCKET_BASE_H_
 
-#include "core.h"
+#include "core/core.h"
+
+// TODO: ipv6
+struct SocketInfo {
+    c_socket_t sock_fd;
+    c_socket_t new_sock_fd;
+    char address[16];
+    in_port_t port;
+    sa_family_t family;
+};
 
 class SocketBase {
    public:

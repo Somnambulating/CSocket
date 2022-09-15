@@ -1,9 +1,9 @@
 #ifdef UNIX
 
-#include "socket_utils_unix.h"
+#include "socket/socket_utils_unix.h"
 
-#include "core.h"
-#include "port.h"
+#include "core/core.h"
+#include "core/port.h"
 
 error_handle_t c_set_socket_zerocopy(c_socket_t fd) {
 #ifdef C_LINUX_ERRQUEUE

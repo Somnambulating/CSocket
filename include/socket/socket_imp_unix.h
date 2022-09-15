@@ -1,17 +1,8 @@
 #ifndef SOCKET_IMP_UNIX_H_
 #define SOCKET_IMP_UNIX_H_
 
-#include "core.h"
-#include "socket_base.h"
-
-// TODO: ipv6
-struct SocketUnixInfo {
-    c_socket_t sock_fd;
-    c_socket_t new_sock_fd;
-    char address[16];
-    in_port_t port;
-    sa_family_t family;
-};
+#include "core/core.h"
+#include "socket/socket_base.h"
 
 class SocketUnixImp: public SocketBase {
    public:
@@ -28,9 +19,9 @@ class SocketUnixImp: public SocketBase {
     status_t close() override;
 
     status_t setsockopt(int level, int option_name, const void *option_value, socklen_t option_len);
-
+    const SocketInfo& socket_info();
    private:
-    SocketUnixInfo socket_info_;
+    SocketInfo socket_info_;
 };
 
 #endif /* SOCKET_IMP_UNIX_H_ */

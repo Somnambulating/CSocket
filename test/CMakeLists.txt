@@ -13,15 +13,38 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
-set(PROJECT_SOURCES
-    "../src/core.h"
-    "../src/CSocket.h"
-    "../src/CSocket.cpp"
+set(HEADERS_DIRECTORY_PATH
+    "../include"
+)
+
+set(SOURCES_DIRECTORY_PATH
+    "../src"
+)
+
+set(HEADERS
+    ${HEADERS_DIRECTORY_PATH}/core/core.h
+    ${HEADERS_DIRECTORY_PATH}/core/error.h
+    ${HEADERS_DIRECTORY_PATH}/event/event.h
+    ${HEADERS_DIRECTORY_PATH}/socket/CSocket.h
+    ${HEADERS_DIRECTORY_PATH}/socket/sockaddr.h
+    ${HEADERS_DIRECTORY_PATH}/socket/socket_utils.h
+    ${HEADERS_DIRECTORY_PATH}/socket/socket.h
+)
+
+set(SOURCES
+    ${SOURCES_DIRECTORY_PATH}/core/error.cpp
+    ${SOURCES_DIRECTORY_PATH}/socket/CSocket.cpp
+    ${SOURCES_DIRECTORY_PATH}/socket/sockaddr_unix.cpp
+    ${SOURCES_DIRECTORY_PATH}/socket/sockaddr_win32.cpp
+    ${SOURCES_DIRECTORY_PATH}/socket/socket_imp_unix.cpp
+    ${SOURCES_DIRECTORY_PATH}/socket/socket_imp_win32.cpp
+    ${SOURCES_DIRECTORY_PATH}/socket/socket_utils_unix.cpp
+    ${SOURCES_DIRECTORY_PATH}/socket/socket_utils_win32.cpp
 )
 
 add_executable(
   Test
-  ${PROJECT_SOURCES}
+  ${SOURCES}
   test.cpp
 )
 target_link_libraries(

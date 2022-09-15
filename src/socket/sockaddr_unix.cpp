@@ -1,10 +1,10 @@
 #ifdef UNIX
 
-#include "sockaddr_unix.h"
+#include "socket/sockaddr_unix.h"
 
 #include <assert.h>
 
-#include "core.h"
+#include "core/core.h"
 
 uint16_t c_htons(uint16_t hostshort) { return htons(hostshort); }
 

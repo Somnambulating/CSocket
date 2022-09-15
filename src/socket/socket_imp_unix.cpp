@@ -2,8 +2,8 @@
 
 #include <assert.h>
 #include <string.h>
-#include "error.h"
-#include "socket_imp_unix.h"
+#include "core/error.h"
+#include "socket/socket_imp_unix.h"
 
 SocketUnixImp::SocketUnixImp() {}
 
@@ -70,6 +70,10 @@ status_t SocketUnixImp::close() {
 
 status_t SocketUnixImp::setsockopt(int level, int option_name, const void *option_value, socklen_t option_len) {
     return ::setsockopt(socket_info_.sock_fd, level, option_name, option_value, option_len);
+}
+
+const SocketInfo& SocketUnixImp::socket_info() {
+    return socket_info_;
 }
 
 #endif

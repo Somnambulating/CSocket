@@ -1,8 +1,8 @@
 #ifndef SOCKET_IMP_WIN32_H_
 #define SOCKET_IMP_WIN32_H_
 
-#include "core.h"
-#include "socket_base.h"
+#include "core/core.h"
+#include "socket/socket_base.h"
 
 class SocketWin32Imp {
 public:

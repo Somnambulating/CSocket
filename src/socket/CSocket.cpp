@@ -1,6 +1,6 @@
-#include "CSocket.h"
+#include "socket/CSocket.h"
 
-#include "core.h"
+#include "core/core.h"
 
 typedef int (*c_socket_fn_type)(int domain, int type, int protocol);
 c_socket_fn_type c_socket = &socket;

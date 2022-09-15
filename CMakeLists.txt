@@ -26,6 +26,8 @@ elseif(UNIX)
     )
 endif()
 
+include_directories("./include")
+
 add_subdirectory(src CSocketLib)
 add_subdirectory(test Test)
 add_subdirectory(demo Demo)

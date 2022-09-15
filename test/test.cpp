@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "../src/CSocket.h"
-#include "../src/core.h"
+#include "socket/CSocket.h"
+#include "core/core.h"
 
 TEST(SocketClientTest, BasicAssertions) {
     char errorMsg[ERROR_MESSAGE_MAX_LEN];

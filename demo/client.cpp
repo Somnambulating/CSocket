@@ -1,5 +1,5 @@
-#include "../src/CSocket.h"
-#include "../src/core.h"
+#include "socket/CSocket.h"
+#include "core/core.h"
 
 #ifndef BUFFER_SIZE
 #define BUFFER_SIZE 512

@@ -2,9 +2,9 @@
 #define SOCKET_UTILS_UNIX_H_
 
 #include <atomic>
-#include "core.h"
-#include "port_platform.h"
-#include "error.h"
+#include "core/core.h"
+#include "core/port_platform.h"
+#include "core/error.h"
 
 /* set a socket to use zerocopy */
 error_handle_t c_set_socket_zerocopy(c_socket_t fd);

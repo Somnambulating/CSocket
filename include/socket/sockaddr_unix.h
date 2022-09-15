@@ -1,7 +1,7 @@
 #ifndef SOCKADDR_UNIX_H_
 #define SOCKADDR_UNIX_H_
 
-#include "core.h"
+#include "core/core.h"
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <netinet/in.h>

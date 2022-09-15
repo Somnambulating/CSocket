@@ -1,4 +1,4 @@
-#include "error.h"
+#include "core/error.h"
 
 char globalErrorMessageBuffer[ERROR_MESSAGE_MAX_LEN];
 
